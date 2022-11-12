@@ -12,11 +12,13 @@ class StudentSerializer(serializers.Serializer):
     class Meta:
         fields = ("id", "name", "roll")
 
+
     def create(self, validated_data):
-        return Student.objects.create(**validated_data)
+        instance = Student.objects.create(**validated_data)
+        return instance
 
     def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
-        instance.roll = validated_data.get("roll", instance.roll)
+        instance.name = validated_data.get("name")
+        instance.roll = validated_data.get("roll")
         instance.save()
         return instance

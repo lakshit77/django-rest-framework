@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -15,8 +14,9 @@ def student_api(request):
     if request.method == "GET":
         stu_objs = Student.objects.all()
         stu_seris = StudentSerializer(stu_objs, many = True)
-        json_data = JSONRenderer().render(stu_seris.data)
-        return HttpResponse(json_data, content_type="appliaction/json")
+        json_byte_data = JSONRenderer().render(stu_seris.data)
+
+        return HttpResponse(json_byte_data, content_type="application/json")
 
     if request.method == "POST":
         json_data = request.body
@@ -30,7 +30,7 @@ def student_api(request):
         else:
             json_data = JSONRenderer().render(serializer.errors)
 
-        return HttpResponse(json_data, content_type="appliaction/json")
+        return HttpResponse(json_data, content_type="application/json")
 
 
 @csrf_exempt
@@ -62,11 +62,7 @@ def student_api_detail(request, id):
         res = {
             "msg": "Data deleteddd.."
         }
-        # json_data = JSONRenderer().render(res)
-        return JsonResponse(res)
-
-
-
-    # return Response(dummy_dict)
+        json_data = JSONRenderer().render(res)
+        return HttpResponse(json_data, content_type="appliaction/json")
 
 
