@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from drf_app.models import Student
 
 
