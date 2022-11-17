@@ -1,8 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+
+from ..serializer import StudentModelSerailzier
 from ..models import Student
-from ..serializer import StudentSerializer
+# from ..serializer import StudentSerializer
 import io
 from django.views.decorators.csrf import csrf_exempt
 
@@ -13,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 def student_api(request):
     if request.method == "GET":
         stu_objs = Student.objects.all()
-        stu_seris = StudentSerializer(stu_objs, many = True)
+        stu_seris = StudentModelSerailzier(stu_objs, many = True)
         json_byte_data = JSONRenderer().render(stu_seris.data)
 
         return HttpResponse(json_byte_data, content_type="application/json")
@@ -22,7 +24,7 @@ def student_api(request):
         json_data = request.body
         stream = io.BytesIO(json_data)
         pythondata = JSONParser().parse(stream)
-        serializer = StudentSerializer(data=pythondata)
+        serializer = StudentModelSerailzier(data=pythondata)
 
         if serializer.is_valid():
             serializer.save()
@@ -37,7 +39,7 @@ def student_api(request):
 def student_api_detail(request, id):
     if request.method == "GET":
         stu_obj = Student.objects.get(id = id)
-        stu_seris = StudentSerializer(stu_obj)
+        stu_seris = StudentModelSerailzier(stu_obj)
         json_data = JSONRenderer().render(stu_seris.data)
         return HttpResponse(json_data, content_type="appliaction/json")
 
@@ -46,7 +48,7 @@ def student_api_detail(request, id):
         stream = io.BytesIO(json_data)
         pythondata = JSONParser().parse(stream)
         stu_obj = Student.objects.get(id=id)
-        serializer = StudentSerializer(stu_obj, data=pythondata, partial=True)
+        serializer = StudentModelSerailzier(stu_obj, data=pythondata, partial=True)
 
         if serializer.is_valid():
             serializer.save()
