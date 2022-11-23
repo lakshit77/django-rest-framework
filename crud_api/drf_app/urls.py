@@ -1,5 +1,5 @@
 from django.urls import path
-from drf_app.views import function_based_views, class_based_views
+from drf_app.views import function_based_views, class_based_views, function_based_api_view
 
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
 
 
     # Class Based View URLS
-    path("student_api", class_based_views.StudentAPI.as_view()),
+    # path("student_api", class_based_views.StudentAPI.as_view()),
 
+    # Function Based api View URLS
+    path("student_api", function_based_api_view.StudentAPI),
 ]
