@@ -5,14 +5,27 @@ import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from ..models import Student
-from ..serializer import StudentModelSerailzier
+from ..serializer import StudentModelSerailzier, DeleteSerialzier, DeleteResponseSerialzier
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from drf_yasg.utils import swagger_auto_schema
 
 
+@swagger_auto_schema(
+    methods=["POST", "PUT"],
+    request_body = StudentModelSerailzier,
+    responses={"200": StudentModelSerailzier,},
+    operation_id="Techsunami POST and PUT",
+)
+@swagger_auto_schema(
+    methods=["DELETE"],
+    request_body = DeleteSerialzier,
+    responses={"200": DeleteResponseSerialzier,},
+    operation_id="Techsunami Delete API",
+)
 @api_view(["GET", "POST", "PUT", "DELETE"])
 def StudentAPI(request):
 

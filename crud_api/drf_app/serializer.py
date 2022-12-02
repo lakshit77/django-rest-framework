@@ -8,7 +8,7 @@ def character_less_than_10(value):
     return value
 
 class StudentModelSerailzier(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, validators=[character_less_than_10])
+    name = serializers.CharField(max_length=100, validators=[character_less_than_10], help_text = "This is name field")
     roll = serializers.CharField(max_length=100, validators=[character_less_than_10])
 
     class Meta:
@@ -39,6 +39,14 @@ class StudentModelSerailzier(serializers.ModelSerializer):
         obj = super(StudentModelSerailzier, self).to_representation(instance)
         print("inside to representation", obj)
         return obj
+
+
+class DeleteSerialzier(serializers.Serializer):
+    id = serializers.IntegerField()
+class DeleteResponseSerialzier(serializers.Serializer):
+    msg = serializers.CharField(help_text = "your data has beeen deletedddddd....")
+
+
 
 
 
