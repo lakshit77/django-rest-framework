@@ -1,12 +1,9 @@
-
-
 from rest_framework.response import Response
 from rest_framework import viewsets
 
 from ..models import Student
 from ..serializer import StudentModelSerailzier, DeleteSerialzier, DeleteResponseSerialzier
 from drf_yasg.utils import swagger_auto_schema
-
 
 @swagger_auto_schema(
     # methods=["POST", "PUT"],
@@ -29,7 +26,7 @@ class StudentViewSet(viewsets.ViewSet):
     @swagger_auto_schema(
         request_body = StudentModelSerailzier,
         responses={"200": StudentModelSerailzier,},
-        operation_id="Techsunami POST and PUT",
+        operation_id="Techsunami POST",
     )
     def create(self, request, pk=None):
         serializer = StudentModelSerailzier(data = request.data)
@@ -37,11 +34,11 @@ class StudentViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-    
+
     @swagger_auto_schema(
         request_body = StudentModelSerailzier,
         responses={"200": StudentModelSerailzier,},
-        operation_id="Techsunami POST and PUT",
+        operation_id="Techsunami Patch",
     )
     def partial_update(self, request, pk=None):
         stu = Student.objects.get(id = pk)
@@ -50,7 +47,6 @@ class StudentViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-
 
     @swagger_auto_schema(
         responses={"200": DeleteResponseSerialzier,},
@@ -63,3 +59,5 @@ class StudentViewSet(viewsets.ViewSet):
             "msg": "your data has beeen deletedddddd...."
         }
         return Response(response)
+
+    

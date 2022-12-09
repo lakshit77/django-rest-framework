@@ -2,34 +2,13 @@ from rest_framework import serializers
 
 from drf_app.models import Student
 
-def character_less_than_10(value):
-    # validators function
-    print(value, "validatorss")
-    return value
-
 class StudentModelSerailzier(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, validators=[character_less_than_10], help_text = "This is name field")
-    roll = serializers.CharField(max_length=100, validators=[character_less_than_10])
+    name = serializers.CharField(max_length=100, help_text = "This is name field")
+    roll = serializers.CharField(max_length=100)
 
     class Meta:
         model = Student
         fields = "__all__"
-
-    def validate_name(self, value): 
-        #Field Level Validation for name
-        print("validate name")
-        return value
-
-    def validate_roll(self, value):
-        #Field Level Validation for roll
-        print("validate roll")
-        return value
-
-    def validate(self, data):
-        #Object Level Validation for all fields
-        print(data, "validate")
-        return data
-
 
     def to_internal_value(self, data):
         print("inside to internal value", data)
