@@ -1,9 +1,10 @@
 from django.urls import path, include
-from drf_app.views import function_based_views, class_based_views, function_based_api_view, class_based_api_view, viewset_view
+from drf_app.views import function_based_views, class_based_views, function_based_api_view, class_based_api_view, viewset_view, modelviewset_views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register("studentapi", viewset_view.StudentViewSet, basename="student")
+# router.register("studentapi", viewset_view.StudentViewSet, basename="student")
+router.register("studentapi", modelviewset_views.StudentModelViewSet, basename="student")
 
 
 urlpatterns = [
